@@ -52,13 +52,13 @@ def cambiaCompletado(db: Session, idHabito: int):
         return {"cambiado": "agregado"}
     
 def obtieneProgreso(db: Session, dias: int = 7):
-    inicio = date.today() - timedelta(dias=dias-1)
+    inicio = date.today() - timedelta(days=dias-1)
     complts = db.query(modelos.HabitoTerminado).filter(modelos.HabitoTerminado.fecha_terminado >= inicio).all()
     # inicializa un diccionario con 0 para cada dia
     contador = {}
     for i in range(dias):
-        d = inicio + timedelta(dias=i)
-        contador[d.isoformat()]=0
+        d = inicio + timedelta(days=i)
+        contador[d.isoformat()]=0 
     for c in complts:
         contador[c.fecha_terminado.isoformat()] += 1
     # resultado como lista ordenada por fecha

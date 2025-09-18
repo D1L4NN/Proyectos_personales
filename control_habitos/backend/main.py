@@ -29,7 +29,7 @@ app.add_middleware(
 
 # dependencia
 def obtieneDB():
-    db = SessionLocal
+    db = SessionLocal()
     try:
         yield db
     finally:
