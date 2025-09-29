@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import HabitList from "./componentes/ListaHabitos";
-import ProgressChart from "./componentes/ChartProgreso";
+import HabitList from "./componentes/HabitList";
+import ProgressChart from "./componentes/ProgressChart";
 
 export default function App() {
   const [view, setView] = useState("habits"); // 'habits' o 'progress'

@@ -45,7 +45,7 @@ def leer_habitos(db: Session = Depends(obtieneDB)):
     hoy = date.today()
     out = []
     for h in habitos:
-        completado_hoy = db.query(modelos.HabitoTerminado).filter_by(id_habito=h.id_habito, fecha=hoy).first() is not None
+        completado_hoy = db.query(modelos.HabitoTerminado).filter_by(id_habito=h.id_habito, fecha_terminado=hoy).first() is not None
         out.append({
             "id": h.id_habito,
             "name": h.nombre,
@@ -61,22 +61,22 @@ def crear_habito(habito: schemas.HabitCreate, db: Session = Depends(obtieneDB)):
     h = crud.creaHabito(db, habito.nombre)
     return {
         "id": h.id_habito,
-        "name": h.nombre,
-        "created_at": h.fecha_creado,
-        "completed_today": False
+        "nombre": h.nombre,
+        "creado_el": h.fecha_creado,
+        "completo_hoy": False
     }
 
 
 @app.post("/habitos/{id_habito}/completo")
-def cambia_completado(idHabito: int, db: Session = Depends(obtieneDB)):
-    if crud.obtenerHabitoPorId(db, idHabito) is None:
+def cambia_completado(id_habito: int, db: Session = Depends(obtieneDB)):
+    if crud.obtenerHabitoPorId(db, id_habito) is None:
         raise HTTPException(status_code=404, detail="Habito no encontrado")
-    return crud.cambiaCompletado(db, idHabito)
+    return crud.cambiaCompletado(db, id_habito)
 
 
 @app.delete("/habitos/{id_habito}")
-def elimina_habito(idHabito: int, db: Session = Depends(obtieneDB)):
-    ok = crud.eliminaHabitoPorId(db, idHabito)
+def elimina_habito(id_habito: int, db: Session = Depends(obtieneDB)):
+    ok = crud.eliminaHabitoPorId(db, id_habito)
     if not ok:
         raise HTTPException(status_code=404, detail="Habito no encontrado")
     return {"ok": True}

@@ -45,7 +45,7 @@ def cambiaCompletado(db: Session, idHabito: int):
         db.commit() # confirmar 
         return {"cambiado": "removido"}
     else:
-        habitoCompletado = modelos.HabitoTerminado(idHabito=idHabito, date= hoy)
+        habitoCompletado = modelos.HabitoTerminado(id_habito=idHabito, fecha_terminado= hoy)
         db.add(habitoCompletado)
         db.commit()
         db.refresh(habitoCompletado)
